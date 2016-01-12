@@ -58,10 +58,8 @@ var app = {
 
         scanner.scan( function (result) { 
 
-            alert("We got a barcode\n" + 
-            "Result: " + result.text + "\n" + 
-            "Format: " + result.format + "\n" + 
-            "Cancelled: " + result.cancelled);  
+            fetchInfo(result.text);
+
 
            console.log("Scanner result: \n" +
                 "text: " + result.text + "\n" +
@@ -93,3 +91,13 @@ var app = {
     }
 
 };
+
+var jsonObj = null;
+function fetchInfo(qr){    
+    $.getJSON( "http://178.62.147.158/api/QRInfo/"+qr, function( data ) {
+          jsonObj = data;
+          alert("Bezoeker gevonden!\n" + 
+            "Bezoeker: " + data.mainbooker + "\n" + 
+            "Email: " + data.mainbooker_email + "\n");
+    });
+}
